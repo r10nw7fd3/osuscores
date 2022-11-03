@@ -17,7 +17,7 @@ Create `credentials.txt`
 ```
 discord hook url
 osu apiv2 id
-osu api key
+osu apiv2 key
 ```
 
 And finally start osuscores
