@@ -8,6 +8,7 @@ public class RankingProcessor {
 	private static AccessToken token;
 
 	private static ArrayList<Score> query(long last) {
+		long start = System.currentTimeMillis();
 		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD);
 		System.out.println("Pulling rankings");
 		try {
@@ -21,9 +22,9 @@ public class RankingProcessor {
 
 		ArrayList<Score> scoresList = new ArrayList<>();
 		UserRecentScoresOsuApiRequest recent = null;
-		for(int id : ids) {
-			recent = new UserRecentScoresOsuApiRequest(token.get(), id, OsuGameMode.MODE_STANDARD, 0); // TODO: idk fix this
-			System.out.println("Pulling scores for " + id);
+		for(int i = 0; i < ids.length; i++) {
+			recent = new UserRecentScoresOsuApiRequest(token.get(), ids[i], OsuGameMode.MODE_STANDARD, 0); // TODO: idk fix this
+			System.out.println("Pulling scores for " + ids[i] + " (" + (i+1) + "/" + ids.length + ")");
 			try {
 				recent.connect();
 			} catch(Exception e) {
@@ -38,6 +39,7 @@ public class RankingProcessor {
 					scoresList.add(score);
 			}
 		}
+		System.out.println("Done. Took " + (System.currentTimeMillis() - start) + "ms");
 		return scoresList;
 	}
 
