@@ -2,3 +2,5 @@ credentials.txt
 lib
 bin
 osuscores.jar
+*~
+*.sw?
