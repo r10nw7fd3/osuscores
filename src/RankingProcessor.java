@@ -7,7 +7,7 @@ import static snr1s.osuscores.Util.OsuGameMode;
 public class RankingProcessor {
 	private static AccessToken token;
 
-	private static ArrayList<Score> query(long last) {
+	private static ArrayList<Score> query(PlayerLastUpdateStore plus) {
 		long start = System.currentTimeMillis();
 		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD);
 		System.out.println("Pulling rankings");
@@ -34,10 +34,12 @@ public class RankingProcessor {
 			}
 			
 			Score[] scores = recent.getScores();
+			long lu = plus.getTime(ids[i]);
 			for(Score score : scores) {
-				if(score.pp >= 800 && score.time >= last)
+				if(score.pp >= 800 && score.time >= lu) 
 					scoresList.add(score);
 			}
+			plus.setTime(ids[i]);
 		}
 		System.out.println("Done. Took " + (System.currentTimeMillis() - start) + "ms");
 		return scoresList;
@@ -58,13 +60,12 @@ public class RankingProcessor {
 
 	public static void process(AccessToken token_, DiscordHook disc) throws Exception {
 		token = token_;
-		long lastUpdate = System.currentTimeMillis();
+		PlayerLastUpdateStore plus = new PlayerLastUpdateStore();
 
 		while(true) {
 			// Query scores
-			ArrayList<Score> scores = query(lastUpdate);
+			ArrayList<Score> scores = query(plus);
 			if(scores == null) { // Try again after sleeping
-				lastUpdate = System.currentTimeMillis();
 				sleep();
 				continue;
 			}
@@ -76,7 +77,6 @@ public class RankingProcessor {
 			disc.postScores(scores);
 
 			// Sleep
-			lastUpdate = System.currentTimeMillis();
 			sleep();
 		}
 	}
