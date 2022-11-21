@@ -48,10 +48,9 @@ public class Main {
 			System.exit(1);
 		}
 
-		discord.postMessage("Started");
 		RankingProcessor.process(token, discord);
 
-		// No need to this as process loop is infinite. Maybe in future we will have a control panel?
+		// No need to do this as process loop is infinite. Maybe in future we will have a control panel?
 		System.out.print("Removing token: ");
 		try {
 			System.out.println(token.remove().code);
