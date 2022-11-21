@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import snr1s.osuscores.HttpResponse;
 
 public class BaseOsuApiRequest {
-	private final int TIMEOUT = 7270; // funi
+	private final int TIMEOUT = 17270; // funi
 
 	private final String endpoint;
 	private final String token;

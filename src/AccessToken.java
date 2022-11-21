@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import snr1s.osuscores.HttpResponse;
 
 public class AccessToken {
-	private final int TIMEOUT = 7270; // funi
+	private final int TIMEOUT = 17270; // funi
 
 	private final int clientId;
 	private final String clientSecret;
