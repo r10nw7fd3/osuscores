@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import snr1s.osuscores.HttpResponse;
 
 public class BaseOsuApiRequest {
+	private final int TIMEOUT = 7270; // funi
+
 	private final String endpoint;
 	private final String token;
 	public String method;
@@ -22,6 +24,8 @@ public class BaseOsuApiRequest {
 	public HttpResponse connect() throws Exception {
 		URL url = new URL(endpoint);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setConnectTimeout(TIMEOUT);
+		conn.setReadTimeout(TIMEOUT);
 		conn.setDoOutput(true);
 		conn.setInstanceFollowRedirects(false);
 		conn.setRequestMethod(method);

@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import snr1s.osuscores.HttpResponse;
 
 public class AccessToken {
+	private final int TIMEOUT = 7270; // funi
+
 	private final int clientId;
 	private final String clientSecret;
 	private String token;
@@ -38,6 +40,8 @@ public class AccessToken {
 		String json = "";
 		URL url = new URL("https://osu.ppy.sh/oauth/token");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();           
+		conn.setConnectTimeout(TIMEOUT);
+		conn.setReadTimeout(TIMEOUT);
 		conn.setDoOutput(true);
 		conn.setInstanceFollowRedirects(false);
 		conn.setRequestMethod("POST");
