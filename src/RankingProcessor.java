@@ -5,9 +5,17 @@ import java.util.Arrays;
 import static snr1s.osuscores.Util.OsuGameMode;
 
 public class RankingProcessor {
-	private static AccessToken token;
+	private AccessToken token;
+	private DiscordHook disc;
+	private int sleepTime;
 
-	private static ArrayList<Score> query(PlayerLastUpdateStore plus) {
+	public RankingProcessor(AccessToken token, DiscordHook disc, int sleepTime) {
+		this.token = token;
+		this.disc = disc;
+		this.sleepTime = sleepTime;
+	}
+
+	private ArrayList<Score> query(PlayerLastUpdateStore plus) {
 		long start = System.currentTimeMillis();
 		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD);
 		System.out.println("Pulling rankings");
@@ -45,11 +53,11 @@ public class RankingProcessor {
 		return scoresList;
 	}
 
-	private static void sleep() throws Exception {
-		Thread.sleep(Main.SLEEP_MILLIS);
+	private void sleep() throws Exception {
+		Thread.sleep(sleepTime);
 	}
 
-	private static void log(ArrayList<Score> scores) {
+	private void log(ArrayList<Score> scores) {
 		if(scores.size() == 0)
 			return;
 		System.out.println("");
@@ -58,8 +66,7 @@ public class RankingProcessor {
 		System.out.println("");
 	}
 
-	public static void process(AccessToken token_, DiscordHook disc) throws Exception {
-		token = token_;
+	public void process() throws Exception {
 		PlayerLastUpdateStore plus = new PlayerLastUpdateStore();
 
 		while(true) {

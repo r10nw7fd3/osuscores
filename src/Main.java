@@ -48,7 +48,7 @@ public class Main {
 			System.exit(1);
 		}
 
-		RankingProcessor.process(token, discord);
+		new RankingProcessor(token, discord, SLEEP_MILLIS).process();
 
 		// No need to do this as process loop is infinite. Maybe in future we will have a control panel?
 		System.out.print("Removing token: ");
