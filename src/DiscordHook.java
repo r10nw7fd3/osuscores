@@ -32,15 +32,13 @@ public class DiscordHook {
 		return new HttpResponse(conn.getResponseCode(), conn.getResponseMessage());
 	}
 
-	public void postScores(ArrayList<Score> scores) {
-		for(Score score : scores) {
-			String msg = stringifyScore(score);
-			try {
-				postMessage(msg);
-			} catch(Exception e) {
-				System.out.println("Failed to post a score");
-				e.printStackTrace();
-			}
+	public void postScore(Score score) {
+		String msg = stringifyScore(score);
+		try {
+			postMessage(msg);
+		} catch(Exception e) {
+			System.out.println("Failed to post a score");
+			e.printStackTrace();
 		}
 	}
 

@@ -15,7 +15,7 @@ public class RankingProcessor {
 		this.sleepTime = sleepTime;
 	}
 
-	private ArrayList<Score> query(PlayerLastUpdateStore plus) {
+	private void query(PlayerLastUpdateStore plus) {
 		long start = System.currentTimeMillis();
 		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD);
 		System.out.println("Pulling rankings");
@@ -24,11 +24,10 @@ public class RankingProcessor {
 		} catch(Exception e) {
 			System.out.println("Failed to pull rankings");
 			e.printStackTrace();
-			return null;
+			return;
 		}
 		int[] ids = rankings.getRanking();
 
-		ArrayList<Score> scoresList = new ArrayList<>();
 		UserRecentScoresOsuApiRequest recent = null;
 		for(int i = 0; i < ids.length; i++) {
 			recent = new UserRecentScoresOsuApiRequest(token.get(), ids[i], OsuGameMode.MODE_STANDARD, 0); // TODO: idk fix this
@@ -38,52 +37,35 @@ public class RankingProcessor {
 			} catch(Exception e) {
 				System.out.println("Failed to pull recents");
 				e.printStackTrace();
-				return null;
+				return;
 			}
 			
 			Score[] scores = recent.getScores();
 			long lu = plus.getTime(ids[i]);
 			for(Score score : scores) {
-				if(score.pp >= 800 && score.time >= lu) 
-					scoresList.add(score);
+				if(score.pp >= 800 && score.time >= lu) {
+					log(score);
+					disc.postScore(score);
+				}
 			}
 			plus.setTime(ids[i]);
 		}
 		System.out.println("Done. Took " + (System.currentTimeMillis() - start) + "ms");
-		return scoresList;
+	}
+
+	private void log(Score score) {
+		System.out.println(DiscordHook.stringifyScore(score));
 	}
 
 	private void sleep() throws Exception {
 		Thread.sleep(sleepTime);
 	}
 
-	private void log(ArrayList<Score> scores) {
-		if(scores.size() == 0)
-			return;
-		System.out.println("");
-		for(Score score : scores)
-			System.out.println(DiscordHook.stringifyScore(score));
-		System.out.println("");
-	}
-
 	public void process() throws Exception {
 		PlayerLastUpdateStore plus = new PlayerLastUpdateStore();
 
 		while(true) {
-			// Query scores
-			ArrayList<Score> scores = query(plus);
-			if(scores == null) { // Try again after sleeping
-				sleep();
-				continue;
-			}
-
-			// Log scores
-			log(scores);
-
-			// Call discord hook
-			disc.postScores(scores);
-
-			// Sleep
+			query(plus);
 			sleep();
 		}
 	}
