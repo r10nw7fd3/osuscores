@@ -4,6 +4,7 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 import snr1s.osuscores.HttpResponse;
 
 public class DiscordHook {
@@ -43,6 +44,8 @@ public class DiscordHook {
 	}
 
 	public static String stringifyScore(Score score) {
+		DecimalFormat df = new DecimalFormat("00.00");
+
 		String fcmisssb = (score.misses+score.sb == 0 ? "FC" : score.misses + "miss+" + score.sb + "sb");
 		String cover = score.cover;
 		cover = cover.substring(0, cover.indexOf("?"));
@@ -53,7 +56,7 @@ public class DiscordHook {
 			score.artist + " - " +
 			score.song + " [" +
 			score.diff + "] %" +
-			score.acc + " +" +
+			df.format(score.acc) + " +" +
 			(score.mods == "" ? "NM" : score.mods )+ " " +
 			fcmisssb + " " +
 			score.pp + "pp " +

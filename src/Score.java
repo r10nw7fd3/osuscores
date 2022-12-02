@@ -2,6 +2,8 @@ package snr1s.osuscores;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import static snr1s.osuscores.Util.getTime;
 
 public class Score {
@@ -37,23 +39,9 @@ public class Score {
 
 	public Score() {}
 
-	public static int getPP(JSONObject json) {
-		try {
-			if(json.optFloat("pp") != Float.NaN)
-				return (int) json.getFloat("pp");
-
-			if(json.optDouble("pp") != Double.NaN)
-				return (int) json.getDouble("pp");
-		} catch(Exception e) {
-			System.out.println("JSON-Java failed to parse pp. again.");
-			e.printStackTrace();
-		}
-
-		return 0;
-	}
-
 	public static Score fromJSONObject(JSONObject json) {
 		Score newscore = new Score();
+
 		try {
 
 		JSONObject user = json.getJSONObject("user");
@@ -66,7 +54,7 @@ public class Score {
 
 		newscore.diff = json.getJSONObject("beatmap").getString("version");
 
-		newscore.acc = json.getFloat("accuracy") * 100;
+		newscore.acc = new BigDecimal(json.getFloat("accuracy") * 100).setScale(2, RoundingMode.HALF_UP).floatValue();
 
 		JSONArray mods = json.getJSONArray("mods");
 		newscore.mods = "";
@@ -81,7 +69,7 @@ public class Score {
 		if(json.get("pp") == JSONObject.NULL)
 			newscore.pp = 0;
 		else
-			newscore.pp = (int) json.getFloat("pp");
+			newscore.pp = Math.round(json.getFloat("pp"));
 
 		newscore.maxcombo = json.getInt("max_combo");
 
