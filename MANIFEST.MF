@@ -1,1 +1,3 @@
 Main-Class: snr1s.osuscores.Main
+Class-Path: json.jar
+
