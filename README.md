@@ -4,7 +4,7 @@ Discord hook that automatically posts 800pp+ scores of top 50
 
 ## Building
 
-Download [JSON-Java](https://github.com/stleary/JSON-java) into `lib/`
+Download and save [JSON-Java](https://github.com/stleary/JSON-java) as `json.jar`
 
 Then run
 
@@ -23,5 +23,5 @@ osu apiv2 key
 And finally start osuscores
 
 ```
-java -cp osuscores.jar:lib/(json-java) snr1s.osuscores.Main # replace (json-java) with JSON-Java jar name
+java -jar osuscores.jar # json.jar should be in the same directory
 ```
