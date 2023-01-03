@@ -49,7 +49,7 @@ public class DiscordHook {
 		String fcmisssb = (score.misses+score.sb == 0 ? "FC" : score.misses + "miss+" + score.sb + "sb");
 		String cover = score.cover;
 		cover = cover.substring(0, cover.indexOf("?"));
-		// Flag Player | Artist - Song [Diff] acc% +MODS FC/miss+sb 0000pp maxcombo scorelink coverlink
+		// Flag Player | Artist - Song [Diff] acc% +MODS FC/miss+sb 0000pp scorelink coverlink
 		return
 			":flag_" + score.flag.toLowerCase() + ": " +
 			score.player + " | " +
@@ -60,7 +60,6 @@ public class DiscordHook {
 			(score.mods == "" ? "NM" : score.mods )+ " " +
 			fcmisssb + " " +
 			score.pp + "pp " +
-			score.maxcombo + "x " +
 			"https://osu.ppy.sh/scores/osu/" + score.scoreid + " " +
 			cover;
 	}

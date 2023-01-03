@@ -17,12 +17,11 @@ public class Score {
 	public int misses;
 	public int sb;
 	public int pp;
-	public int maxcombo;
 	public long scoreid;
 	public String cover = "";
 	public long time;
 
-	public Score(String flag, String player, String artist, String song, String diff, float acc, String mods, int misses, int sb, int pp, int maxcombo, long scoreid) {
+	public Score(String flag, String player, String artist, String song, String diff, float acc, String mods, int misses, int sb, int pp, long scoreid) {
 		this.flag = flag;
 		this.player = player;
 		this.artist = artist;
@@ -33,7 +32,6 @@ public class Score {
 		this.misses = misses;
 		this.sb = sb;
 		this.pp = pp;
-		this.maxcombo = maxcombo;
 		this.scoreid = scoreid;
 	}
 
@@ -70,8 +68,6 @@ public class Score {
 			newscore.pp = 0;
 		else
 			newscore.pp = Math.round(json.getFloat("pp"));
-
-		newscore.maxcombo = json.getInt("max_combo");
 
 		if(json.get("best_id") == JSONObject.NULL)
 			newscore.scoreid = 0;
