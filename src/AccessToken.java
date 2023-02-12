@@ -27,7 +27,7 @@ public class AccessToken {
 			try {
 				generate();
 			} catch(Exception e) {
-				System.out.println("AccessToken | Failed to renew the token");
+				System.out.println("Failed to renew the token");
 			}
 		}
 
