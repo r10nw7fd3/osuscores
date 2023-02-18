@@ -8,7 +8,7 @@ import static snr1s.osuscores.DiscordHook.stringifyScore;
 
 public class Main {
 	public static final int UTC_OFFSET = 3;
-	public static final int SLEEP_MILLIS = 3000 * 60; // 3 mins
+	public static final int SLEEP_MILLIS = 5000 * 60; // 5 mins
 
 
 	private static String CREDENTIALS_DISCORD;
