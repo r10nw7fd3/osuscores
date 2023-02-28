@@ -7,10 +7,6 @@ import static snr1s.osuscores.Util.*;
 import static snr1s.osuscores.DiscordHook.stringifyScore;
 
 public class Main {
-	public static final int UTC_OFFSET = 3;
-	public static final int SLEEP_MILLIS = 5000 * 60; // 5 mins
-	public static final int LEADERBOARD_PAGE = 1;
-
 	private static String CREDENTIALS_DISCORD;
 	private static int CREDENTIALS_OSU_ID;
 	private static String CREDENTIALS_OSU_SECRET;
@@ -28,6 +24,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Exception {
+		Args argsObj = new Args(args);
+		System.out.println("Re-run with \"-h\" to see available arguments");
 		try {
 			loadCreds("credentials.txt");
 		} catch(Exception e) {
@@ -47,7 +45,7 @@ public class Main {
 			System.exit(1);
 		}
 
-		new RankingProcessor(token, discord, SLEEP_MILLIS, LEADERBOARD_PAGE).process();
+		new RankingProcessor(token, discord, argsObj.delay, argsObj.page).process();
 
 		// No need to do this as process loop is infinite. Maybe in future we will have a control panel?
 		System.out.print("Removing token: ");
