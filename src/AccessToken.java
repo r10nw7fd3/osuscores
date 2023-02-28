@@ -23,7 +23,7 @@ public class AccessToken {
 
 	public String get() {
 		if(System.currentTimeMillis() >= expiretime - 2000 /* Just in case it becomes invalid during usage */) {
-			System.out.println("Generating new token...");
+			System.out.println("Generating new token");
 			try {
 				generate();
 			} catch(Exception e) {
@@ -60,6 +60,7 @@ public class AccessToken {
 		}
 		this.token = jobj.getString("access_token");
 		this.expiretime = System.currentTimeMillis() + (jobj.getInt("expires_in") * 1000);
+		System.out.println(this.token);
 	}
 
 	public HttpResponse remove() throws Exception {

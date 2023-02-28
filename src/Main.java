@@ -37,7 +37,6 @@ public class Main {
 		}
 		System.out.println("Discord: " + CREDENTIALS_DISCORD + "\nosu! id: " + CREDENTIALS_OSU_ID + "\nosu! secret: " + CREDENTIALS_OSU_SECRET);
 		AccessToken token = new AccessToken(CREDENTIALS_OSU_ID, CREDENTIALS_OSU_SECRET);
-		System.out.println(token.get());
 
 		DiscordHook discord = null;
 		try {
