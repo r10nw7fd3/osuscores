@@ -5,8 +5,8 @@ import org.json.JSONArray;
 import static snr1s.osuscores.Util.*;
 
 public class RankingOsuApiRequest extends BaseOsuApiRequest {
-	public RankingOsuApiRequest(String token, OsuGameMode mode) {
-		super("https://osu.ppy.sh/api/v2/rankings/" + stringifyOsuGameMode(mode) + "/performance", token);
+	public RankingOsuApiRequest(String token, OsuGameMode mode, int page) {
+		super("https://osu.ppy.sh/api/v2/rankings/" + stringifyOsuGameMode(mode) + "/performance?cursor[page]=" + page, token);
 		this.method = "GET";
 	}
 

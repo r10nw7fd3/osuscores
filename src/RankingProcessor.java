@@ -8,16 +8,18 @@ public class RankingProcessor {
 	private AccessToken token;
 	private DiscordHook disc;
 	private int sleepTime;
+	private int page;
 
-	public RankingProcessor(AccessToken token, DiscordHook disc, int sleepTime) {
+	public RankingProcessor(AccessToken token, DiscordHook disc, int sleepTime, int page) {
 		this.token = token;
 		this.disc = disc;
 		this.sleepTime = sleepTime;
+		this.page = page;
 	}
 
 	private void query(PlayerLastUpdateStore plus) {
 		long start = System.currentTimeMillis();
-		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD);
+		RankingOsuApiRequest rankings = new RankingOsuApiRequest(token.get(), OsuGameMode.MODE_STANDARD, this.page);
 		System.out.println("Pulling rankings");
 		try {
 			rankings.connect();

@@ -9,7 +9,7 @@ import static snr1s.osuscores.DiscordHook.stringifyScore;
 public class Main {
 	public static final int UTC_OFFSET = 3;
 	public static final int SLEEP_MILLIS = 5000 * 60; // 5 mins
-
+	public static final int LEADERBOARD_PAGE = 1;
 
 	private static String CREDENTIALS_DISCORD;
 	private static int CREDENTIALS_OSU_ID;
@@ -47,7 +47,7 @@ public class Main {
 			System.exit(1);
 		}
 
-		new RankingProcessor(token, discord, SLEEP_MILLIS).process();
+		new RankingProcessor(token, discord, SLEEP_MILLIS, LEADERBOARD_PAGE).process();
 
 		// No need to do this as process loop is infinite. Maybe in future we will have a control panel?
 		System.out.print("Removing token: ");
