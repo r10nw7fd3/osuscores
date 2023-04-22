@@ -23,5 +23,11 @@ osu apiv2 key
 And finally start osuscores
 
 ```
-java -jar osuscores.jar # json.jar should be in the same directory
+java -jar osuscores.jar # json.jar must be in the same directory
 ```
+
+Run
+```
+java -jar osuscores.jar -h
+```
+To view available arguments
