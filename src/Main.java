@@ -38,7 +38,7 @@ public class Main {
 
 		DiscordHook discord = null;
 		try {
-			discord = new DiscordHook(CREDENTIALS_DISCORD);
+			discord = new DiscordHook(CREDENTIALS_DISCORD, argsObj.modEmojis);
 		} catch(Exception e) {
 			System.out.println("Failed to construct DiscordHook");
 			e.printStackTrace();

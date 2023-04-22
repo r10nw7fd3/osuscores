@@ -3,6 +3,7 @@ package snr1s.osuscores;
 public class Args {
 	public int page = 1;
 	public int delay = 5000 * 60;
+	public boolean modEmojis = false;
 
 	public Args(String[] args) {
 		for(int i = 0; i < args.length; i++) {
@@ -27,6 +28,8 @@ public class Args {
 				if(this.delay <= 0)
 					invValForArg("-d");
 			}
+			else if(args[i].equals("-e"))
+				modEmojis = true;
 		}
 	}
 
@@ -34,6 +37,7 @@ public class Args {
 		System.out.println("Options:");
 		System.out.println("  -p <page>  Leaderboard page. Default: 1");
 		System.out.println("  -d <delay> Delay in millis between api hits. Default: 300000");
+		System.out.println("  -e         Use emojis for displaying mods");
 	}
 
 	private static int argVal(String arg, String val) {

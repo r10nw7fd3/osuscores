@@ -56,7 +56,7 @@ public class RankingProcessor {
 	}
 
 	private void log(Score score) {
-		System.out.println(DiscordHook.stringifyScore(score));
+		System.out.println(DiscordHook.stringifyScore(score, false, false));
 	}
 
 	private void sleep() throws Exception {

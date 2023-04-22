@@ -9,9 +9,11 @@ import snr1s.osuscores.HttpResponse;
 
 public class DiscordHook {
 	private URL url;
+	private boolean modEmojis;
 
-	public DiscordHook(String url) throws Exception {
+	public DiscordHook(String url, boolean modEmojis) throws Exception {
 		this.url = new URL(url);
+		this.modEmojis = modEmojis;
 	}
 
 	private void setParams(HttpURLConnection conn, String json) throws Exception {
@@ -34,7 +36,7 @@ public class DiscordHook {
 	}
 
 	public void postScore(Score score) {
-		String msg = stringifyScore(score);
+		String msg = stringifyScore(score, modEmojis, true); // Should I make flagEmoji a CLI argument?
 		try {
 			postMessage(msg);
 		} catch(Exception e) {
@@ -43,7 +45,7 @@ public class DiscordHook {
 		}
 	}
 
-	public static String stringifyScore(Score score) {
+	public static String stringifyScore(Score score, boolean modEmojis, boolean flagEmoji) {
 		DecimalFormat df = new DecimalFormat("00.00");
 
 		String fcmisssb = (score.misses+score.sb == 0 ? "FC" : score.misses + "miss+" + score.sb + "sb");
@@ -51,16 +53,35 @@ public class DiscordHook {
 		cover = cover.substring(0, cover.indexOf("?"));
 		// Flag Player | Artist - Song [Diff] acc% +MODS FC/miss+sb 0000pp scorelink coverlink
 		return
-			":flag_" + score.flag.toLowerCase() + ": " +
+			stringifyFlag(score.flag, flagEmoji) + " " +
 			score.player + " | " +
 			score.artist + " - " +
 			score.song + " [" +
 			score.diff + "] " +
 			df.format(score.acc) + "% +" +
-			(score.mods == "" ? "NM" : score.mods )+ " " +
+			stringifyMods(score.mods, modEmojis) + " " +
 			fcmisssb + " " +
 			score.pp + "pp " +
 			"https://osu.ppy.sh/scores/osu/" + score.scoreid + " " +
 			cover;
+	}
+
+	private static String stringifyFlag(String flag, boolean flagEmoji) {
+		return flagEmoji ? ":flag_" + flag.toLowerCase() + ":" : flag;
+	}
+
+	private static String stringifyMods(String mods, boolean modEmojis) {
+		if(mods.equals(""))
+			return "NM";
+		if(!modEmojis)
+			return mods;
+
+		String res = "";
+		int i = 0;
+		while(i < mods.length()) {
+			res += ":" + mods.substring(i, i + 2).toLowerCase() + ":";
+			i += 2;
+		}
+		return res;
 	}
 }
