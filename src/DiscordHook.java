@@ -67,7 +67,7 @@ public class DiscordHook {
 	}
 
 	private static String stringifyFlag(String flag, boolean flagEmoji) {
-		return flagEmoji ? ":flag_" + flag.toLowerCase() + ":" : flag;
+		return flagEmoji ? ":flag_" + flag.toLowerCase() + ":" : flag.toUpperCase();
 	}
 
 	private static String stringifyMods(String mods, boolean modEmojis) {
